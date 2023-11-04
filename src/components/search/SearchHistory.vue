@@ -64,7 +64,7 @@ onMounted(() => {
   LoadingIcon(v-if="isLoading" class="mt-[80px]")
   template(v-else)
     ul.w-full.mb-4(v-if="searchHistoryList.length > 0")
-      li.p-2.flex.justify-between.mb-2.rounded-md(class="bg-white/60 last:mb-0" v-for="item in currentWeather" @click="goWeahterPage(item.location.name)")
+      li.p-2.flex.justify-between.mb-2.rounded-md.cursor-pointer(class="bg-white/60 last:mb-0 hover:bg-white/80" v-for="item in currentWeather" @click="goWeahterPage(item.location.name)")
         .flex.flex-col.jutify-between
           .mb-4
             h3.text-2xl.font-semibold.tracking-wider {{ item.location.name }}
