@@ -72,7 +72,6 @@ const getTodayWeather = (weather: any) => {
     }
 
     if (sunsetHours >= currentHours && sunsetHours === weatherHours) {
-      console.log('sunsetHours', formatHoursMinutes(sunsetTime));
       hoursWeatherList.push({
         title: 'Sunset',
         time: formatHoursMinutes(sunsetTime)
