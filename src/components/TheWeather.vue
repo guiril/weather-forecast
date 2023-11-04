@@ -8,12 +8,17 @@ import CurrentWeather from './weather/CurrentWeather.vue';
 import HoursWeather from './weather/HoursWeather.vue';
 import DaysWeather from './weather/DaysWeather.vue';
 
+const HISTORY_LIST_KEY = 'searchHistoryList';
+
 const route = useRoute();
 
 const isLoading = ref<boolean>(false);
 const errorMessage = ref<string | undefined>(undefined);
 const tenDaysWeather = ref<any[]>([]);
 const hoursForecast: any[] = [];
+const searchHistoryList: { location: string }[] = JSON.parse(
+  localStorage.getItem(HISTORY_LIST_KEY) || '[]'
+);
 
 let paramsLocation: string | string[];
 let currentLocation: string;
@@ -30,6 +35,21 @@ const formatHoursMinutes = (date: string, time: string) => {
   const minutes = dateObj.getMinutes();
 
   return `${padZero(hours)}:${padZero(minutes)}`;
+};
+
+const addToHistoryList = () => {
+  const isLocationNotFound =
+    searchHistoryList.findIndex(
+      (item: { location: string }) => item.location === currentLocation
+    ) === -1;
+
+  if (isLocationNotFound) {
+    searchHistoryList.push({
+      location: currentLocation
+    });
+
+    localStorage.setItem(HISTORY_LIST_KEY, JSON.stringify(searchHistoryList));
+  }
 };
 
 const getTodayWeather = (weather: any) => {
@@ -139,6 +159,7 @@ const getWeather = async () => {
     );
 
     getHoursWeather(response.forecast.forecastday);
+    addToHistoryList();
     tenDaysWeather.value = [...response.forecast.forecastday];
     isLoading.value = false;
   } catch (err) {
@@ -160,7 +181,7 @@ onMounted(() => {
 .container.flex.items-center.mb-8
   router-link.inline-block.p-2(to="/")
     img.w-6.h-6(src="../assets/left-arrow.png")
-LoadingIcon(v-if="isLoading")
+LoadingIcon(v-if="isLoading" class="mt-[180px]")
 div.container.mb-10(v-else class="pb-[98px]")
   ErrorMessage(v-if="errorMessage" :message="errorMessage")
   template(v-else)

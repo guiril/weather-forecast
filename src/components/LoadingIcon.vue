@@ -13,7 +13,9 @@ span.loader
   width: 32px;
   height: 90px;
   display: block;
-  margin: 180px auto 20px;
+  margin-right: auto;
+  margin-bottom: 20px;
+  margin-left: auto;
   position: relative;
   border-radius: 50% 50% 0 0;
   border-bottom: 10px solid #ff3d00;
