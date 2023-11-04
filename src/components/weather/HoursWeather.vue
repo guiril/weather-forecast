@@ -27,6 +27,6 @@ ul.flex.p-2.mb-8.rounded-md.overflow-x-auto.scrollbar-hide(class="bg-white/60")
       span.text-xl.font-medium {{ hour.temp_c }}°
     template(v-else)
       span.text-lg.font-medium {{ hour.time }}
-      img.w-8.h-8.my-2(:src="hour.title === 'Sunrise' ? '../../assets/sunrise.png' : '../../assets/sunset.png'")
+      img.w-8.h-8.my-2(:src="hour.title === 'Sunrise' ? '/sunrise.png' : '/sunset.png'")
       span.text-xl.font-medium {{ hour.title }}
 </template>
