@@ -1,9 +1,9 @@
 const padZero = (number: number) => (number < 10 ? `0${number}` : number);
 
-export const formatHoursMinutes = (date: string, time: string) => {
-  const dateObj = new Date(`${date} ${time}`);
-  const hours = dateObj.getHours();
-  const minutes = dateObj.getMinutes();
+export const formatHoursMinutes = (time: string) => {
+  // time: HH:MM AM, HH:MM PM
+  const hours = get24Hours(time);
+  const minutes = Number(time.split(' ')[0].split(':')[1]);
 
   return `${padZero(hours)}:${padZero(minutes)}`;
 };

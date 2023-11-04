@@ -52,7 +52,6 @@ const addToHistoryList = () => {
 };
 
 const getTodayWeather = (weather: any) => {
-  const weatherDate = weather.date;
   const sunriseTime = weather.astro.sunrise;
   const sunriseHours = get24Hours(sunriseTime);
   const sunsetTime = weather.astro.sunset;
@@ -68,21 +67,21 @@ const getTodayWeather = (weather: any) => {
     if (sunriseHours >= currentHours && sunriseHours === weatherHours) {
       hoursWeatherList.push({
         title: 'Sunrise',
-        time: formatHoursMinutes(weatherDate, sunriseTime)
+        time: formatHoursMinutes(sunriseTime)
       });
     }
 
     if (sunsetHours >= currentHours && sunsetHours === weatherHours) {
+      console.log('sunsetHours', formatHoursMinutes(sunsetTime));
       hoursWeatherList.push({
         title: 'Sunset',
-        time: formatHoursMinutes(weatherDate, sunsetTime)
+        time: formatHoursMinutes(sunsetTime)
       });
     }
   });
 };
 
 const getTomorrowWeather = (weather: any) => {
-  const weatherDate = weather.date;
   const sunriseTime = weather.astro.sunrise;
   const sunriseHours = get24Hours(sunriseTime);
   const sunsetTime = weather.astro.sunset;
@@ -97,14 +96,14 @@ const getTomorrowWeather = (weather: any) => {
       if (sunriseHours === weatherHours) {
         hoursWeatherList.push({
           title: 'Sunrise',
-          time: formatHoursMinutes(weatherDate, sunriseTime)
+          time: formatHoursMinutes(sunriseTime)
         });
       }
 
       if (sunsetHours === weatherHours) {
         hoursWeatherList.push({
           title: 'Sunset',
-          time: formatHoursMinutes(weatherDate, sunsetTime)
+          time: formatHoursMinutes(sunsetTime)
         });
       }
     }
