@@ -15,6 +15,7 @@ import HoursWeather from './weather/HoursWeather.vue';
 import DaysWeather from './weather/DaysWeather.vue';
 
 const HISTORY_LIST_KEY = 'searchHistoryList';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const route = useRoute();
 
@@ -131,7 +132,7 @@ const getCurrentWeather = (
 const getLocalTime = async () => {
   try {
     const response = await (
-      await fetch(`https://weather-auth.vercel.app/current/${paramsLocation}`)
+      await fetch(`${API_BASE_URL}/current/${paramsLocation}`)
     ).json();
 
     if (response.message) {
@@ -151,7 +152,7 @@ const getForecastData = async () => {
     isLoading.value = true;
 
     const response = await (
-      await fetch(`https://weather-auth.vercel.app/forecast/${paramsLocation}`)
+      await fetch(`${API_BASE_URL}/forecast/${paramsLocation}`)
     ).json();
 
     if (response.message) {

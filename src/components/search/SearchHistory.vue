@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import LoadingIcon from '../LoadingIcon.vue';
 
 const HISTORY_LIST_KEY = 'searchHistoryList';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const router = useRouter();
 
@@ -38,7 +39,7 @@ const getCurrentWeather = async () => {
 
     try {
       const response = await (
-        await fetch(`https://weather-auth.vercel.app/current/${location}`)
+        await fetch(`${API_BASE_URL}/current/${location}`)
       ).json();
 
       if (response.message) {
