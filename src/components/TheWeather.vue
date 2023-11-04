@@ -16,11 +16,11 @@ const tenDaysWeather = ref<any[]>([]);
 const hoursForecast: any[] = [];
 
 let paramsLocation: string | string[];
-let currentLocation: string | undefined;
-let todayTemp: number | undefined;
-let todayConditionText: string | undefined;
-let todayMaxTemp: number | undefined;
-let todayMinTemp: number | undefined;
+let currentLocation: string;
+let todayTemp: number;
+let todayConditionText: string;
+let todayMaxTemp: number;
+let todayMinTemp: number;
 
 const padZero = (number: number) => (number < 10 ? `0${number}` : number);
 
