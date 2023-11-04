@@ -118,7 +118,7 @@ const getWeather = async () => {
     isLoading.value = true;
 
     const response = await (
-      await fetch(`https://weather-auth.vercel.app/weather/${paramsLocation}`)
+      await fetch(`https://weather-auth.vercel.app/forecast/${paramsLocation}`)
     ).json();
 
     if (response.message) {
