@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import {
+  formatHoursMinutes,
+  getDateFromFullTime,
+  getHoursFromFullTime,
+  get24Hours
+} from '../utils';
 
 import LoadingIcon from './LoadingIcon.vue';
 import ErrorMessage from './ErrorMessage.vue';
@@ -15,27 +21,20 @@ const route = useRoute();
 const isLoading = ref<boolean>(false);
 const errorMessage = ref<string | undefined>(undefined);
 const tenDaysWeather = ref<any[]>([]);
-const hoursForecast: any[] = [];
+const hoursWeatherList: any[] = [];
 const searchHistoryList: { location: string }[] = JSON.parse(
   localStorage.getItem(HISTORY_LIST_KEY) || '[]'
 );
 
 let paramsLocation: string | string[];
 let currentLocation: string;
+let currentDate: number;
+let currentHours: number;
+
 let todayTemp: number;
 let todayConditionText: string;
 let todayMaxTemp: number;
 let todayMinTemp: number;
-
-const padZero = (number: number) => (number < 10 ? `0${number}` : number);
-
-const formatHoursMinutes = (date: string, time: string) => {
-  const dateObj = new Date(`${date} ${time}`);
-  const hours = dateObj.getHours();
-  const minutes = dateObj.getMinutes();
-
-  return `${padZero(hours)}:${padZero(minutes)}`;
-};
 
 const addToHistoryList = () => {
   const isLocationNotFound =
@@ -53,29 +52,28 @@ const addToHistoryList = () => {
 };
 
 const getTodayWeather = (weather: any) => {
-  const currentHours = new Date().getHours();
   const weatherDate = weather.date;
   const sunriseTime = weather.astro.sunrise;
-  const sunriseHours = new Date(`${weatherDate} ${sunriseTime}`).getHours();
+  const sunriseHours = get24Hours(sunriseTime);
   const sunsetTime = weather.astro.sunset;
-  const sunsetHours = new Date(`${weatherDate} ${sunsetTime}`).getHours();
+  const sunsetHours = get24Hours(sunsetTime);
 
   weather.hour.forEach((weather: any, index: number) => {
-    const weatherHours = new Date(weather.time_epoch * 1000).getHours();
+    const weatherHours = getHoursFromFullTime(weather.time);
 
     if (index >= currentHours) {
-      hoursForecast.push(weather);
+      hoursWeatherList.push(weather);
     }
 
     if (sunriseHours >= currentHours && sunriseHours === weatherHours) {
-      hoursForecast.push({
+      hoursWeatherList.push({
         title: 'Sunrise',
         time: formatHoursMinutes(weatherDate, sunriseTime)
       });
     }
 
     if (sunsetHours >= currentHours && sunsetHours === weatherHours) {
-      hoursForecast.push({
+      hoursWeatherList.push({
         title: 'Sunset',
         time: formatHoursMinutes(weatherDate, sunsetTime)
       });
@@ -84,28 +82,27 @@ const getTodayWeather = (weather: any) => {
 };
 
 const getTomorrowWeather = (weather: any) => {
-  const currentHours = new Date().getHours();
   const weatherDate = weather.date;
   const sunriseTime = weather.astro.sunrise;
-  const sunriseHours = new Date(`${weatherDate} ${sunriseTime}`).getHours();
+  const sunriseHours = get24Hours(sunriseTime);
   const sunsetTime = weather.astro.sunset;
-  const sunsetHours = new Date(`${weatherDate} ${sunsetTime}`).getHours();
+  const sunsetHours = get24Hours(sunsetTime);
 
   weather.hour.forEach((weather: any, index: number) => {
-    const weatherHours = new Date(weather.time_epoch * 1000).getHours();
+    const weatherHours = getHoursFromFullTime(weather.time);
 
     if (index <= currentHours) {
-      hoursForecast.push(weather);
+      hoursWeatherList.push(weather);
 
       if (sunriseHours === weatherHours) {
-        hoursForecast.push({
+        hoursWeatherList.push({
           title: 'Sunrise',
           time: formatHoursMinutes(weatherDate, sunriseTime)
         });
       }
 
       if (sunsetHours === weatherHours) {
-        hoursForecast.push({
+        hoursWeatherList.push({
           title: 'Sunset',
           time: formatHoursMinutes(weatherDate, sunsetTime)
         });
@@ -133,7 +130,25 @@ const getCurrentWeather = (
   todayMaxTemp = maxTemp;
 };
 
-const getWeather = async () => {
+const getLocalTime = async () => {
+  try {
+    const response = await (
+      await fetch(`https://weather-auth.vercel.app/current/${paramsLocation}`)
+    ).json();
+
+    if (response.message) {
+      throw new Error(response.message);
+    }
+
+    const localtime = response.location.localtime;
+    currentDate = getDateFromFullTime(localtime);
+    currentHours = getHoursFromFullTime(localtime);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const getForecastData = async () => {
   try {
     isLoading.value = true;
 
@@ -173,7 +188,8 @@ const getLocation = () => {
 
 onMounted(() => {
   getLocation();
-  getWeather();
+  getLocalTime();
+  getForecastData();
 });
 </script>
 
@@ -186,6 +202,6 @@ div.container.mb-10(v-else class="pb-[98px]")
   ErrorMessage(v-if="errorMessage" :message="errorMessage")
   template(v-else)
     CurrentWeather(:location="currentLocation" :temp="todayTemp" :condition="todayConditionText" :maxTemp="todayMaxTemp" :minTemp="todayMinTemp")
-    HoursWeather(:dayWeather="hoursForecast")
+    HoursWeather(:hoursWeather="hoursWeatherList" :currentDate="currentDate" :currentHours="currentHours")
     DaysWeather(:tenDaysWeather="tenDaysWeather")
 </template>

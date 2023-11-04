@@ -1,25 +1,28 @@
 <script setup lang="ts">
-defineProps<{
-  dayWeather?: any[];
+import { getDateFromFullTime, getHoursFromFullTime } from '../../utils';
+
+const props = defineProps<{
+  hoursWeather?: any[];
+  currentDate?: number;
+  currentHours?: number;
 }>();
 
-const formatHours = (timestamp: number) => {
-  const currentDate = new Date().getDate();
-  const currentHours = new Date().getHours();
-  const timestampDate = new Date(timestamp * 1000).getDate();
-  const timestampHours = new Date(timestamp * 1000).getHours();
+const formatHours = (time: string) => {
+  const weatherDate = getDateFromFullTime(time);
+  const weatherHours = getHoursFromFullTime(time);
 
-  return timestampDate === currentDate && timestampHours === currentHours
+  return weatherDate === props.currentDate &&
+    weatherHours === props.currentHours
     ? 'Now'
-    : timestampHours;
+    : weatherHours;
 };
 </script>
 
 <template lang="pug">
 ul.flex.p-2.mb-8.rounded-md.overflow-x-auto.scrollbar-hide(class="bg-white/60")
-  li.flex.flex-col.items-center.mr-4.text-zinc-800(class="last:mr-0" v-for="hour in dayWeather" :key="hour.time_epoch")
+  li.flex.flex-col.items-center.mr-4.text-zinc-800(class="last:mr-0" v-for="hour in hoursWeather" :key="hour.time_epoch")
     template(v-if="hour.condition")
-      span.text-lg.font-medium {{ formatHours(hour.time_epoch) }}
+      span.text-lg.font-medium {{ formatHours(hour.time) }}
       img.w-8.h-8.my-2(:src="hour.condition.icon")
       span.text-xl.font-medium {{ hour.temp_c }}°
     template(v-else)
