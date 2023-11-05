@@ -4,7 +4,7 @@ import type { CSSProperties } from 'vue';
 import { getDateFromFullTime, getHoursFromFullTime } from '../../utils';
 
 const props = defineProps<{
-  hoursWeather?: any[];
+  hourlyWeather?: any[];
   currentDate?: number;
   currentHours?: number;
 }>();
@@ -69,7 +69,7 @@ onUnmounted(() => {
   .w-full.rounded-t-md(class="max-w-[calc(100vw-64px)] sm:max-w-[640px] bg-primary" :style="titleStyle")
     span.block.pt-2.pb-5.pl-2.text-lg.font-bold.text-white.rounded-t-md(class="bg-white/60") HOURLY FORECAST
   ul.flex.pb-2.px-2.overflow-x-auto.scrollbar-hide(class="bg-white/60")
-    li.flex.flex-col.items-center.mr-4.text-zinc-800(class="last:mr-0" v-for="hour in hoursWeather" :key="hour.time_epoch")
+    li.flex.flex-col.items-center.mr-4.text-zinc-800(class="last:mr-0" v-for="hour in hourlyWeather" :key="hour.time_epoch")
       template(v-if="hour.condition")
         span.text-lg.font-medium {{ formatHours(hour.time) }}
         img.w-8.h-8.my-2(:src="hour.condition.icon")

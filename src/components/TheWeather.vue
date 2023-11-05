@@ -11,8 +11,8 @@ import {
 import LoadingIcon from './LoadingIcon.vue';
 import ErrorMessage from './ErrorMessage.vue';
 import CurrentWeather from './weather/CurrentWeather.vue';
-import HoursWeather from './weather/HoursWeather.vue';
-import DaysWeather from './weather/DaysWeather.vue';
+import HourlyWeather from './weather/HourlyWeather.vue';
+import DailyWeather from './weather/DailyWeather.vue';
 
 const HISTORY_LIST_KEY = 'searchHistoryList';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -22,7 +22,7 @@ const route = useRoute();
 const isLoading = ref<boolean>(false);
 const errorMessage = ref<string | undefined>(undefined);
 const tenDaysWeather = ref<any[]>([]);
-const hoursWeatherList: any[] = [];
+const hourlyWeatherList: any[] = [];
 const searchHistoryList: { location: string }[] = JSON.parse(
   localStorage.getItem(HISTORY_LIST_KEY) || '[]'
 );
@@ -62,18 +62,18 @@ const getTodayWeather = (weather: any) => {
     const weatherHours = getHoursFromFullTime(weather.time);
 
     if (index >= currentHours) {
-      hoursWeatherList.push(weather);
+      hourlyWeatherList.push(weather);
     }
 
     if (sunriseHours >= currentHours && sunriseHours === weatherHours) {
-      hoursWeatherList.push({
+      hourlyWeatherList.push({
         title: 'Sunrise',
         time: formatHoursMinutes(sunriseTime)
       });
     }
 
     if (sunsetHours >= currentHours && sunsetHours === weatherHours) {
-      hoursWeatherList.push({
+      hourlyWeatherList.push({
         title: 'Sunset',
         time: formatHoursMinutes(sunsetTime)
       });
@@ -91,17 +91,17 @@ const getTomorrowWeather = (weather: any) => {
     const weatherHours = getHoursFromFullTime(weather.time);
 
     if (index <= currentHours) {
-      hoursWeatherList.push(weather);
+      hourlyWeatherList.push(weather);
 
       if (sunriseHours === weatherHours) {
-        hoursWeatherList.push({
+        hourlyWeatherList.push({
           title: 'Sunrise',
           time: formatHoursMinutes(sunriseTime)
         });
       }
 
       if (sunsetHours === weatherHours) {
-        hoursWeatherList.push({
+        hourlyWeatherList.push({
           title: 'Sunset',
           time: formatHoursMinutes(sunsetTime)
         });
@@ -110,7 +110,7 @@ const getTomorrowWeather = (weather: any) => {
   });
 };
 
-const getHoursWeather = (forecastday: any[]) => {
+const getHourlyWeather = (forecastday: any[]) => {
   getTodayWeather(forecastday[0]);
   getTomorrowWeather(forecastday[1]);
 };
@@ -171,7 +171,7 @@ const getForecastData = async () => {
       response.forecast.forecastday[0].day.maxtemp_c
     );
 
-    getHoursWeather(response.forecast.forecastday);
+    getHourlyWeather(response.forecast.forecastday);
     addToHistoryList();
     tenDaysWeather.value = [...response.forecast.forecastday];
     isLoading.value = false;
@@ -200,6 +200,6 @@ LoadingIcon(v-if="isLoading" class="mt-[180px]")
   ErrorMessage(v-if="errorMessage" :message="errorMessage")
   template(v-else)
     CurrentWeather(:location="currentLocation" :temp="todayTemp" :condition="todayConditionText" :maxTemp="todayMaxTemp" :minTemp="todayMinTemp")
-    HoursWeather(:hoursWeather="hoursWeatherList" :currentDate="currentDate" :currentHours="currentHours")
-    DaysWeather(:tenDaysWeather="tenDaysWeather")
+    HourlyWeather(:hourlyWeather="hourlyWeatherList" :currentDate="currentDate" :currentHours="currentHours")
+    DailyWeather(:tenDaysWeather="tenDaysWeather")
 </template>
