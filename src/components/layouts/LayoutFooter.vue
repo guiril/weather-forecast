@@ -1,5 +1,5 @@
 <template lang="pug">
-footer.fixed.bottom-0.z-20.w-full.py-2.bg-white
+footer.fixed.bottom-0.z-40.w-full.py-2.bg-white
   .flex.flex-col
     a.mb-2(href="https://www.weatherapi.com/" title="Free Weather API")
       img.block.mx-auto(src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0")

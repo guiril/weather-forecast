@@ -70,7 +70,7 @@ const getTempBarStyle = (minTemp: number, maxTemp: number) => {
 </script>
 
 <template lang="pug">
-.p-2.rounded-md(class="bg-white/60")
+.relative.z-30.p-2.rounded-md(class="bg-white/60")
   .flex.justify-between.items-center.mb-5
     span.block.mr-2.text-lg.font-bold.text-white {{ currentDays }}-DAY(S) FORCAST
     select.p-1.rounded(v-model="currentDays")
