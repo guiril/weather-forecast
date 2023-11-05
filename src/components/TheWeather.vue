@@ -196,7 +196,7 @@ onMounted(() => {
   router-link.inline-block.p-2(to="/")
     img.w-6.h-6(src="../assets/left-arrow.png")
 LoadingIcon(v-if="isLoading" class="mt-[180px]")
-div.container.mb-10(v-else class="pb-[98px]")
+.container.mb-10(v-else class="pt-[200px] pb-[98px]")
   ErrorMessage(v-if="errorMessage" :message="errorMessage")
   template(v-else)
     CurrentWeather(:location="currentLocation" :temp="todayTemp" :condition="todayConditionText" :maxTemp="todayMaxTemp" :minTemp="todayMinTemp")

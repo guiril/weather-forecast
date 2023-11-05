@@ -83,7 +83,7 @@ const getTempBarStyle = (minTemp: number, maxTemp: number) => {
         img.w-8.h-8(:src="day.day.condition.icon")
         span.w-12.text-lg.font-medium {{ day.day.mintemp_c }}°
         .relative.h-2.mx-2.bg-white.rounded-lg(class="w-[100px]")
-          span.absolute.block.h-full.bg-cyan-500.rounded-lg(:style="getTempBarStyle(day.day.mintemp_c, day.day.maxtemp_c)"
+          span.absolute.z-10.block.h-full.bg-cyan-500.rounded-lg(:style="getTempBarStyle(day.day.mintemp_c, day.day.maxtemp_c)"
           )
         span.w-12.text-lg.font-medium {{ day.day.maxtemp_c }}°
 </template>

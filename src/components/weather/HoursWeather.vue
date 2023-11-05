@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import type { CSSProperties } from 'vue';
 import { getDateFromFullTime, getHoursFromFullTime } from '../../utils';
 
 const props = defineProps<{
@@ -6,6 +8,8 @@ const props = defineProps<{
   currentDate?: number;
   currentHours?: number;
 }>();
+
+const scrollY = ref<number>(0);
 
 const formatHours = (time: string) => {
   const weatherDate = getDateFromFullTime(time);
@@ -16,18 +20,63 @@ const formatHours = (time: string) => {
     ? 'Now'
     : weatherHours;
 };
+
+const titleStyle = computed((): CSSProperties => {
+  let position: CSSProperties['position'];
+  let top: string;
+  let right: string;
+  let left: string;
+  let transform: string;
+
+  if (scrollY.value >= 166 && scrollY.value <= 315) {
+    position = 'fixed';
+    top = '108px';
+    right = 'auto';
+    left = '50%';
+    transform = 'translateX(-50%)';
+  } else {
+    position = 'absolute';
+    top = '0px';
+    right = '0px';
+    left = '0px';
+    transform = 'translateX(0)';
+  }
+
+  return {
+    position,
+    top,
+    right,
+    left,
+    transform
+  };
+});
+
+const handleScroll = () => {
+  scrollY.value = window.scrollY;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template lang="pug">
-ul.flex.p-2.mb-8.rounded-md.overflow-x-auto.scrollbar-hide(class="bg-white/60")
-  li.flex.flex-col.items-center.mr-4.text-zinc-800(class="last:mr-0" v-for="hour in hoursWeather" :key="hour.time_epoch")
-    template(v-if="hour.condition")
-      span.text-lg.font-medium {{ formatHours(hour.time) }}
-      img.w-8.h-8.my-2(:src="hour.condition.icon")
-      span.text-xl.font-medium {{ hour.temp_c }}°
-    template(v-else)
-      span.text-lg.font-medium {{ hour.time }}
-      img.w-8.h-8.my-2(v-if="hour.title === 'Sunrise'" src="../../assets/sunrise.png")
-      img.w-8.h-8.my-2(v-else src="../../assets/sunset.png")
-      span.text-xl.font-medium {{ hour.title }}
+.relative.pt-14.mb-8.bg-primary.rounded-md
+  .w-full.rounded-t-md(class="max-w-[calc(100vw-64px)] sm:max-w-[640px] bg-primary" :style="titleStyle")
+    span.block.pt-2.pb-5.pl-2.text-lg.font-bold.text-white.rounded-t-md(class="bg-white/60") HOURLY FORECAST
+  ul.flex.pb-2.px-2.overflow-x-auto.scrollbar-hide(class="bg-white/60")
+    li.flex.flex-col.items-center.mr-4.text-zinc-800(class="last:mr-0" v-for="hour in hoursWeather" :key="hour.time_epoch")
+      template(v-if="hour.condition")
+        span.text-lg.font-medium {{ formatHours(hour.time) }}
+        img.w-8.h-8.my-2(:src="hour.condition.icon")
+        span.text-xl.font-medium {{ hour.temp_c }}°
+      template(v-else)
+        span.text-lg.font-medium {{ hour.time }}
+        img.w-8.h-8.my-2(v-if="hour.title === 'Sunrise'" src="../../assets/sunrise.png")
+        img.w-8.h-8.my-2(v-else src="../../assets/sunset.png")
+        span.text-xl.font-medium {{ hour.title }}
 </template>
