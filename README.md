@@ -9,7 +9,7 @@
 - 使用 Typescript 檢查型別。
 - 使用 Pug 樣板語言。
 - 使用 Tailwind CSS 開發 UI 介面。
-- 使用 Node.js/Express 開發簡易 [API](https://gitlab.com/guiril/weather-auth)。
+- 使用 Node.js/Express 開發簡易 API。
 
 ## 操作方法
 
