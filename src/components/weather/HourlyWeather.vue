@@ -22,36 +22,6 @@ const formatHours = (time: string) => {
     : weatherHours;
 };
 
-const titleStyle = computed((): CSSProperties => {
-  let position: CSSProperties['position'];
-  let top: string;
-  let right: string;
-  let left: string;
-  let transform: string;
-
-  if (scrollY.value >= 166 && scrollY.value <= 315) {
-    position = 'fixed';
-    top = '108px';
-    right = 'auto';
-    left = '50%';
-    transform = 'translateX(-50%)';
-  } else {
-    position = 'absolute';
-    top = '0px';
-    right = '0px';
-    left = '0px';
-    transform = 'translateX(0)';
-  }
-
-  return {
-    position,
-    top,
-    right,
-    left,
-    transform
-  };
-});
-
 const handleScroll = () => {
   scrollY.value = window.scrollY;
 };
