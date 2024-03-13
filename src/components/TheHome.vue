@@ -5,7 +5,7 @@ import SearchHistory from './search/SearchHistory.vue';
 </script>
 
 <template lang="pug">
-div
+header.flex.justify-between.items-center(class="h-[180px] mb-[60px]")
   LayoutLogo
   SearchInput
 SearchHistory

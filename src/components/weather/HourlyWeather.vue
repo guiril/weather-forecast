@@ -93,18 +93,17 @@ onUnmounted(() => {
 </script>
 
 <template lang="pug">
-.relative.pt-14.mb-8.bg-primary.rounded-md
-  .w-full.rounded-t-md(class="max-w-[calc(100vw-64px)] sm:max-w-[640px] bg-primary" :style="titleStyle")
-    span.block.pt-2.pb-5.pl-2.text-lg.font-bold.text-white.rounded-t-md(class="bg-white/60") HOURLY FORECAST
-  ul.flex.pb-2.px-2.cursor-pointer.overflow-x-auto.scrollbar-hide(class="bg-white/60" ref="dailyWeatherList" @mousedown="handleMousedown" @mousemove="handleMousemove" @mouseup="handleMouseup" @mouseleave="handleMouseleave")
-    li.flex.flex-col.items-center.mr-4.text-zinc-800(class="last:mr-0" v-for="hour in hourlyWeather" :key="hour.time_epoch")
-      template(v-if="hour.condition")
-        span.text-lg.font-medium {{ formatHours(hour.time) }}
-        img.w-8.h-8.my-2(:src="hour.condition.icon")
-        span.text-xl.font-medium {{ hour.temp_c }}°
-      template(v-else)
-        span.text-lg.font-medium {{ hour.time }}
-        img.w-8.h-8.my-2(v-if="hour.title === 'Sunrise'" src="../../assets/sunrise.png")
-        img.w-8.h-8.my-2(v-else src="../../assets/sunset.png")
-        span.text-xl.font-medium {{ hour.title }}
+.mb-10.overflow-hidden
+  h3.font-bold(class="mb-[38px] text-[20px] text-[#7F7F7F]") HOURLY FORECAST
+  ul.flex.justify-start.cursor-pointer.overflow-x-auto(class="max-w-[950px]" ref="dailyWeatherList" @mousedown="handleMousedown" @mousemove="handleMousemove" @mouseup="handleMouseup" @mouseleave="handleMouseleave")
+    li.flex.flex-col.items-center.shrink-0(class="p-[18px]" v-for="hour in hourlyWeather" :key="hour.time_epoch")
+        template(v-if="hour.condition")
+          span.text-xs.font-bold(class="text-[#7F7F7F]") {{ formatHours(hour.time) }}
+          img.w-16.my-2(:src="hour.condition.icon")
+          span.text-xs.font-bold.text-black {{ hour.temp_c }}°
+        template(v-else)
+          span.text-xs.font-bold(class="text-[#7F7F7F]") {{ hour.time }}
+          img.w-16.my-2(v-if="hour.title === 'Sunrise'" src="../../assets/images/sunrise.svg")
+          img.w-16.my-2(v-else src="../../assets/images/sunset.svg")
+          span.text-xs.font-bold.text-black {{ hour.title }}
 </template>

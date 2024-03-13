@@ -8,6 +8,7 @@ import {
   get24Hours
 } from '../utils';
 
+import SearchInput from './search/SearchInput.vue';
 import LoadingIcon from './LoadingIcon.vue';
 import ErrorMessage from './ErrorMessage.vue';
 import CurrentWeather from './weather/CurrentWeather.vue';
@@ -162,7 +163,7 @@ const getForecastData = async () => {
     }
 
     errorMessage.value = undefined;
-
+    console.log(response);
     getCurrentWeather(
       response.location.name,
       response.current.temp_c,
@@ -192,14 +193,18 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.container.flex.items-center.mb-8
-  router-link.inline-block.p-2(to="/")
-    img.w-6.h-6(src="../assets/left-arrow.png")
-LoadingIcon(v-if="isLoading" class="mt-[180px]")
-.container.mb-10(v-else class="pt-[200px] pb-[98px]")
+header.flex.justify-between.items-center(class="h-[180px] mb-[60px]")
+  router-link.flex(to="/")
+    img.mr-5(src="../assets/left-arrow.svg")
+    img(class="", src="../assets/images/logo.svg", alt="")
+  SearchInput
+LoadingIcon(v-if="isLoading")
+main(v-else class="")
   ErrorMessage(v-if="errorMessage" :message="errorMessage")
   template(v-else)
-    CurrentWeather(:location="currentLocation" :temp="todayTemp" :condition="todayConditionText" :maxTemp="todayMaxTemp" :minTemp="todayMinTemp")
-    HourlyWeather(:hourlyWeather="hourlyWeatherList" :currentDate="currentDate" :currentHours="currentHours")
-    DailyWeather(:tenDaysWeather="tenDaysWeather")
+    .flex.justify-between(class="mb-[66px]")
+      CurrentWeather(:location="currentLocation" :temp="todayTemp" :condition="todayConditionText" :maxTemp="todayMaxTemp" :minTemp="todayMinTemp")
+      .flex.flex-col
+        HourlyWeather(:hourlyWeather="hourlyWeatherList" :currentDate="currentDate" :currentHours="currentHours")
+        DailyWeather(:tenDaysWeather="tenDaysWeather")
 </template>

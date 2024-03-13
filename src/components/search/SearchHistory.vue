@@ -60,20 +60,19 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-.container.flex.flex-col.items-center(class="pb-[98px]")
-  h2.mb-4.text-2xl.font-semibold.text-center.text-white Search History
-  LoadingIcon(v-if="isLoading" class="mt-[80px]")
+main
+  .flex.items-center(class="mb-[85px]")
+    h2.mr-8.font-bold(class="text-[30px]") Search History
+    button.py-3.px-5.text-primary.font-bold.border.border-primary(type="button" class="rounded-[13px] hover:text-white hover:bg-primary" v-if="searchHistoryList.length !== 0" @click="clearSearchHistory") Clear All History
+  LoadingIcon(v-if="isLoading")
   template(v-else)
-    ul.w-full.mb-4(v-if="searchHistoryList.length > 0")
-      li.p-2.flex.justify-between.mb-2.rounded-md.cursor-pointer(class="bg-white/60 last:mb-0 hover:bg-white/80" v-for="item in currentWeather" @click="goWeahterPage(item.location.name)")
-        .flex.flex-col.jutify-between
-          .mb-4
-            h3.text-2xl.font-semibold.tracking-wider {{ item.location.name }}
-            span.mr-2.font-medium.tracking-wide {{ item.location.localtime.substring(item.location.localtime.length - 5) }}
+    ul.grid.grid-cols-4.gap-x-5.gap-y-4(v-if="searchHistoryList.length > 0")
+      li.cursor-pointer(class="py-[45px] pl-[43px] pr-[29px] rounded-[20px] bg-white hover:bg-white/50" v-for="item in currentWeather" @click="goWeahterPage(item.location.name)")
+        .flex.justify-between.items-center(class="mb-[23px]")
           .flex.items-center
             img.w-8.h-8.mr-2(:src="item.current.condition.icon", :alt="item.current.condition.text")
-            span.mr-2.font-medium.tracking-wide {{ item.current.condition.text }}
-        div
-          span.mr-2.text-3xl.font-bold {{ item.current.temp_c }}°C
-    button.w-40.py-3.py-1.bg-info.rounded(type="button" class="hover:bg-yellow-300" v-if="searchHistoryList.length !== 0" @click="clearSearchHistory") Clear All History
+            span.text-xl.font-extrabold(class="text-black/50") {{ item.current.condition.text }}
+          span.text-xl.font-extrabold.text-primary(class="") {{ item.location.localtime.substring(item.location.localtime.length - 5) }}
+        span.inline-block.mb-6.text-6xl.font-bold {{ item.current.temp_c }} °C
+        h3.text-2xl.font-semibold.tracking-wider {{ item.location.name }}
 </template>

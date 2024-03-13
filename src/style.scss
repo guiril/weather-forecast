@@ -3,8 +3,10 @@
 @import 'tailwindcss/utilities';
 
 .container {
-  max-width: 640px;
+  max-width: 1364px;
   margin: 0 auto;
+  padding-right: 30px;
+  padding-left: 30px;
 }
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */

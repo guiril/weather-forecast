@@ -53,16 +53,24 @@ onUnmounted(() => {
 </script>
 
 <template lang="pug">
-.fixed.z-20.w-full.text-center(class="max-w-[640px] left-2/4 translate-x-[-50%]" :style="{ top: containerTop + 'px' }")
-  .w-full.flex.flex-col.items-center.mb-8.text-slate-50
-    .w-full.pt-8.pb-2.flex.flex-col.items-center.bg-primary
-      h2.mb-2.text-3xl.font-semibold.tracking-wider {{ location }}
-      .flex.justify-center.items-center(v-if="scrollY > 135" :style="getOpacity(0, 135, 230)")
-        span.mr-3.font-medium.tracking-wide {{ temp }}°C
-        span.font-medium.tracking-wide {{ condition }}
-    span.mb-2.text-5xl.font-bold(:style="getOpacity(1, 95, 130)") {{ temp }}°C
-    span.font-medium.tracking-wide(class="mb-0.5" :style="getOpacity(1, 64, 100)") {{ condition }}
-    .flex(:style="getOpacity(1, 30, 70)")
-      span.mr-3.font-medium.tracking-wide H:{{ maxTemp }}°
-      span.font-medium.tracking-wide L:{{ minTemp }}°
+.mx-auto.bg-white.mr-10(class="w-[400px] py-[59px] px-[53px] rounded-[26px]")
+  span.block.font-extrabold.text-xl(class="mb-[22px] text-black/50") {{ condition }}
+  span.block.font-bold(class="mb-[22px] text-[75px]") {{ temp }}°C
+  .flex.items-center.mb-8.text-xl.font-bold.text-primary
+    span.mr-5 H:{{ maxTemp }}°
+    span L:{{ minTemp }}°
+  h2.font-bold(class="text-[25px]") {{ location }}
+//-       span.font-medium.tracking-wide L:{{ minTemp }}°
+//- .fixed.z-20.w-full.text-center(class="max-w-[640px] left-2/4 translate-x-[-50%]" :style="{ top: containerTop + 'px' }")
+//-   .w-full.flex.flex-col.items-center.mb-8.text-slate-50
+//-     .w-full.pt-8.pb-2.flex.flex-col.items-center.bg-primary
+//-       h2.mb-2.text-3xl.font-semibold.tracking-wider {{ location }}
+//-       .flex.justify-center.items-center(v-if="scrollY > 135" :style="getOpacity(0, 135, 230)")
+//-         span.mr-3.font-medium.tracking-wide {{ temp }}°C
+//-         span.font-medium.tracking-wide {{ condition }}
+//-     span.mb-2.text-5xl.font-bold(:style="getOpacity(1, 95, 130)") {{ temp }}°C
+//-     span.font-medium.tracking-wide(class="mb-0.5" :style="getOpacity(1, 64, 100)") {{ condition }}
+//-     .flex(:style="getOpacity(1, 30, 70)")
+//-       span.mr-3.font-medium.tracking-wide H:{{ maxTemp }}°
+//-       span.font-medium.tracking-wide L:{{ minTemp }}°
 </template>

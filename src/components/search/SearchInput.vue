@@ -12,7 +12,5 @@ const onSearchClicked = () => {
 </script>
 
 <template lang="pug">
-.w-full.flex.justify-center.items-center.mb-16
-  input.px-2.py-1.mr-2.rounded(type="text" placeholder="Find Weather by City" v-model="searchInput" @keyup.enter="onSearchClicked" autofocus)
-  button.px-2.py-1.bg-info.rounded(type="submit" @click="onSearchClicked") Search
+input.py-5.text-center(class="w-[460px] text-[22px] bg-[#E8E8E8] rounded-[20px]" type="text" placeholder="Search City" v-model="searchInput" @keyup.enter="onSearchClicked" autofocus)
 </template>

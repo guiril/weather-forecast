@@ -1,3 +1,6 @@
 <template lang="pug">
-h1.mb-10.text-3xl.font-bold.text-center.text-white Weather Forecast
+h1
+  router-link.flex.items-center(to="/")
+    img(class="mr-[22px]", src="../../assets/images/logo.svg", alt="")
+    span.font-bold(class="text-[50px]") Weather
 </template>
