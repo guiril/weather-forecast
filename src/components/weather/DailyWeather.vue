@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
-const DEFAULT_DAYS = 10;
+const DEFAULT_DAYS = 3;
 
 const props = defineProps<{
   tenDaysWeather?: any[];
