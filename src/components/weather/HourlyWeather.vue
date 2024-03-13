@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import type { CSSProperties } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { getDateFromFullTime, getHoursFromFullTime } from '../../utils';
 
 const props = defineProps<{
