@@ -163,7 +163,7 @@ const getForecastData = async () => {
     }
 
     errorMessage.value = undefined;
-    console.log(response);
+
     getCurrentWeather(
       response.location.name,
       response.current.temp_c,
