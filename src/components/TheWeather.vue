@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import {
   formatHoursMinutes,
@@ -27,6 +27,7 @@ const hourlyWeatherList: any[] = [];
 const searchHistoryList: { location: string }[] = JSON.parse(
   localStorage.getItem(HISTORY_LIST_KEY) || '[]'
 );
+const paramsLocation = ref<string | string[]>(route.params.location || '');
 
 let paramsLocation: string | string[];
 let currentLocation: string;
@@ -133,7 +134,7 @@ const getCurrentWeather = (
 const getLocalTime = async () => {
   try {
     const response = await (
-      await fetch(`${API_BASE_URL}/current/${paramsLocation}`)
+      await fetch(`${API_BASE_URL}/current/${paramsLocation.value}`)
     ).json();
 
     if (response.message) {
@@ -153,7 +154,7 @@ const getForecastData = async () => {
     isLoading.value = true;
 
     const response = await (
-      await fetch(`${API_BASE_URL}/forecast/${paramsLocation}`)
+      await fetch(`${API_BASE_URL}/forecast/${paramsLocation.value}`)
     ).json();
 
     if (response.message) {
@@ -182,10 +183,15 @@ const getForecastData = async () => {
 };
 
 const getLocation = () => {
-  paramsLocation = route.params.location;
+  paramsLocation.value = route.params.location;
 };
 
 onMounted(() => {
+  getLocalTime();
+  getForecastData();
+});
+
+watch(route, () => {
   getLocation();
   getLocalTime();
   getForecastData();
