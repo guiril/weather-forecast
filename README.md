@@ -1,15 +1,21 @@
 # Weather Forecast
 
-- 使用 Vue 3 開發的天氣預報網頁。
-- Live Demo：https://weather-forecast-opal.vercel.app
+Uses Vue 3 and Tailwind CSS to implement a weather forecast site.
 
-## 使用技術
+## Technologies Practiced
 
-- 使用 Vite 建立 Vue 3 專案，並使用 Composition API 進行開發。
-- 使用 Typescript 檢查型別。
-- 使用 Pug 樣板語言。
-- 使用 Tailwind CSS 開發 UI 介面。
-- 使用 Node.js/Express 開發簡易 API。
+- Uses Vite to build a Vue 3 project and utilizes the Composition API for development..
+- Uses TypeScript for type checking.
+- Uses the Pug template language.
+- Utilizes Tailwind CSS for UI development and responsive design.
+- Uses Node.js/Express to develop a basic API.
+
+## Screenshots
+
+![Homepage](https://i.imgur.com/iGbq9Zv.png)
+
+![Weather Page](https://i.imgur.com/JN6Anuj.png)
+
 
 ## 操作方法
 
@@ -18,7 +24,7 @@
    - 目前天氣狀況。
    - 24 小時天氣預報。
       - 包含日落和日出時間。
-   - 10 天的天氣預報。
+   - 3 天的天氣預報。
       - 可透過右側選單選擇顯示天數。
       - 溫度條左側為 N 天最低溫；右側為 N 天最高溫。
 3. 點擊左上角箭頭即可返回首頁。
