@@ -4,7 +4,7 @@ import { ref, computed } from 'vue';
 const DEFAULT_DAYS = 3;
 
 const props = defineProps<{
-  tenDaysWeather?: any[];
+  dailyWeather?: any[];
 }>();
 
 const currentDays = ref<number>(DEFAULT_DAYS);
@@ -31,9 +31,9 @@ const formatDayAsAbbrev = (day: number) => {
 };
 
 const currentDaysWeather = computed(() => {
-  if (!props.tenDaysWeather) return [];
+  if (!props.dailyWeather) return [];
 
-  return props.tenDaysWeather.filter(
+  return props.dailyWeather.filter(
     (_weather, index) => index < currentDays.value
   );
 });

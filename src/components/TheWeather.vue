@@ -22,14 +22,13 @@ const route = useRoute();
 
 const isLoading = ref<boolean>(false);
 const errorMessage = ref<string | undefined>(undefined);
-const tenDaysWeather = ref<any[]>([]);
+const dailyWeather = ref<any[]>([]);
 const hourlyWeatherList: any[] = [];
 const searchHistoryList: { location: string }[] = JSON.parse(
   localStorage.getItem(HISTORY_LIST_KEY) || '[]'
 );
 const paramsLocation = ref<string | string[]>(route.params.location || '');
 
-let paramsLocation: string | string[];
 let currentLocation: string;
 let currentDate: number;
 let currentHours: number;
@@ -175,7 +174,7 @@ const getForecastData = async () => {
 
     getHourlyWeather(response.forecast.forecastday);
     addToHistoryList();
-    tenDaysWeather.value = [...response.forecast.forecastday];
+    dailyWeather.value = [...response.forecast.forecastday];
     isLoading.value = false;
   } catch (err) {
     console.error(err);
@@ -212,5 +211,5 @@ main(v-else class="")
       CurrentWeather(:location="currentLocation" :temp="todayTemp" :condition="todayConditionText" :maxTemp="todayMaxTemp" :minTemp="todayMinTemp")
       .flex.flex-col
         HourlyWeather(:hourlyWeather="hourlyWeatherList" :currentDate="currentDate" :currentHours="currentHours")
-        DailyWeather(:tenDaysWeather="tenDaysWeather")
+        DailyWeather(:dailyWeather="dailyWeather")
 </template>
