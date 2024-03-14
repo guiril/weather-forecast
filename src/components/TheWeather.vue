@@ -198,8 +198,8 @@ watch(route, () => {
 </script>
 
 <template lang="pug">
-header.flex.justify-between.items-center(class="h-[180px] mb-[60px]")
-  router-link.flex(to="/")
+header.flex.justify-between.items-center(class="h-[180px] mb-[60px] lg:flex-col")
+  router-link.flex(to="/" class="lg:pt-[30px]")
     img.mr-5(src="../assets/left-arrow.svg")
     img(class="", src="../assets/images/logo.svg", alt="")
   SearchInput
@@ -207,9 +207,9 @@ LoadingIcon(v-if="isLoading")
 main(v-else class="")
   ErrorMessage(v-if="errorMessage" :message="errorMessage")
   template(v-else)
-    .flex.justify-between(class="mb-[66px]")
+    .flex.justify-between(class="mb-[66px] md:flex-col")
       CurrentWeather(:location="currentLocation" :temp="todayTemp" :condition="todayConditionText" :maxTemp="todayMaxTemp" :minTemp="todayMinTemp")
-      .flex.flex-col
+      .flex.flex-col.overflow-hidden
         HourlyWeather(:hourlyWeather="hourlyWeatherList" :currentDate="currentDate" :currentHours="currentHours")
         DailyWeather(:dailyWeather="dailyWeather")
 </template>

@@ -12,5 +12,5 @@ const onSearchClicked = () => {
 </script>
 
 <template lang="pug">
-input.py-5.text-center(class="w-[460px] text-[22px] bg-[#E8E8E8] rounded-[20px]" type="text" placeholder="Search City" v-model="searchInput" @keyup.enter="onSearchClicked" autofocus)
+input.py-5.text-center(class="w-[460px] text-[22px] bg-[#E8E8E8] rounded-[20px] sm:w-full" type="text" placeholder="Search City" v-model="searchInput" @keyup.enter="onSearchClicked" autofocus)
 </template>

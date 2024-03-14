@@ -63,8 +63,8 @@ onUnmounted(() => {
 
 <template lang="pug">
 .mb-10.overflow-hidden
-  h3.font-bold(class="mb-[38px] text-[20px] text-[#7F7F7F]") HOURLY FORECAST
-  ul.flex.justify-start.cursor-pointer.overflow-x-auto(class="max-w-[950px]" ref="dailyWeatherList" @mousedown="handleMousedown" @mousemove="handleMousemove" @mouseup="handleMouseup" @mouseleave="handleMouseleave")
+  h3.font-bold(class="mb-[38px] text-[20px] text-black") HOURLY FORECAST
+  ul.flex.justify-start.cursor-pointer.overflow-x-auto(class="" ref="dailyWeatherList" @mousedown="handleMousedown" @mousemove="handleMousemove" @mouseup="handleMouseup" @mouseleave="handleMouseleave")
     li.flex.flex-col.items-center.shrink-0(class="p-[18px]" v-for="hour in hourlyWeather" :key="hour.time_epoch")
         template(v-if="hour.condition")
           span.text-xs.font-bold(class="text-[#7F7F7F]") {{ formatHours(hour.time) }}
