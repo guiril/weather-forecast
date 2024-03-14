@@ -15,7 +15,8 @@ export default {
     extend: {
       colors: {
         neutral: {
-          0: '#F8F8F8'
+          0: '#F8F8F8',
+          50: '#7F7F7F'
         },
         primary: '#0076FF'
       }

@@ -79,7 +79,7 @@ const getTempBarStyle = (minTemp: number, maxTemp: number) => {
   ul.flex.flex-col
     template(v-for="(day, index) in currentDaysWeather" :key="day.date_epoch")
       li.flex.justify-between.items-center.mb-4(class="last:mb-0")
-        span.w-14.text-xl.font-bold(class="text-[#7F7F7F] sm:text-sm") {{ index === 0 ? 'Today' : formatDayAsAbbrev(new Date(day.date).getDay()) }}
+        span.w-14.text-xl.font-bold(class="text-neutral-50 sm:text-sm") {{ index === 0 ? 'Today' : formatDayAsAbbrev(new Date(day.date).getDay()) }}
         img.w-8.h-8(:src="day.day.condition.icon")
         span.w-12.text-xl.font-bold(class="sm:text-sm") {{ day.day.mintemp_c }}°
         .relative.h-2.mx-2.rounded-lg(class="w-[100px] bg-primary/30")

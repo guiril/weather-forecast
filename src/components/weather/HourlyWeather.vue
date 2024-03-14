@@ -66,13 +66,13 @@ onUnmounted(() => {
   h3.font-bold(class="mb-[38px] text-[20px] text-black") HOURLY FORECAST
   ul.flex.justify-start.cursor-pointer.overflow-x-auto(class="" ref="dailyWeatherList" @mousedown="handleMousedown" @mousemove="handleMousemove" @mouseup="handleMouseup" @mouseleave="handleMouseleave")
     li.flex.flex-col.items-center.shrink-0(class="p-[18px]" v-for="hour in hourlyWeather" :key="hour.time_epoch")
-        template(v-if="hour.condition")
-          span.text-xs.font-bold(class="text-[#7F7F7F]") {{ formatHours(hour.time) }}
-          img.w-16.my-2(:src="hour.condition.icon")
-          span.text-xs.font-bold.text-black {{ hour.temp_c }}°
-        template(v-else)
-          span.text-xs.font-bold(class="text-[#7F7F7F]") {{ hour.time }}
-          img.w-16.my-2(v-if="hour.title === 'Sunrise'" src="../../assets/images/sunrise.svg")
-          img.w-16.my-2(v-else src="../../assets/images/sunset.svg")
-          span.text-xs.font-bold.text-black {{ hour.title }}
+      template(v-if="hour.condition")
+        span.text-xs.font-bold(class="text-neutral-50") {{ formatHours(hour.time) }}
+        img.w-16.my-2(:src="hour.condition.icon")
+        span.text-xs.font-bold.text-black {{ hour.temp_c }}°
+      template(v-else)
+        span.text-xs.font-bold(class="text-neutral-50") {{ hour.time }}
+        img.w-16.my-2(v-if="hour.title === 'Sunrise'" src="../../assets/images/sunrise.svg")
+        img.w-16.my-2(v-else src="../../assets/images/sunset.svg")
+        span.text-xs.font-bold.text-black {{ hour.title }}
 </template>

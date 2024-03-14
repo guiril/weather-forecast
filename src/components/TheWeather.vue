@@ -200,8 +200,8 @@ watch(route, () => {
 <template lang="pug">
 header.flex.justify-between.items-center(class="h-[180px] mb-[60px] lg:flex-col")
   router-link.flex(to="/" class="lg:pt-[30px]")
-    img.mr-5(src="../assets/left-arrow.svg")
-    img(class="", src="../assets/images/logo.svg", alt="")
+    img.mr-5(src="../assets/images/left-arrow.svg", alt="go back home")
+    img(class="", src="../assets/images/logo.svg", alt="logo")
   SearchInput
 LoadingIcon(v-if="isLoading")
 main(v-else class="")

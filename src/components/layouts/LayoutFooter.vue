@@ -7,5 +7,5 @@ footer.mt-16
         a(href="https://www.weatherapi.com/" title="Free Weather API" target="_blank")
           img.block.mx-auto(src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0")
       li.text-center
-        small(class="text-[#7F7F7F]") This project utilizes UI elements from UI8 website created by Josh Corbett.
+        small(class="text-neutral-50") This project utilizes UI elements from UI8 website created by Josh Corbett.
 </template>
