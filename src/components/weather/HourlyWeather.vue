@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { getDateFromFullTime, getHoursFromFullTime } from '../../utils';
+import { getDateFromFullTime, getHoursFromFullTime } from '@/utils';
 
 const props = defineProps<{
   hourlyWeather?: any[];

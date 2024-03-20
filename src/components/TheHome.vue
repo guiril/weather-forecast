@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import LayoutLogo from './layouts/LayoutLogo.vue';
-import SearchInput from './search/SearchInput.vue';
-import SearchHistory from './search/SearchHistory.vue';
+import LayoutLogo from '@/components/layouts/LayoutLogo.vue';
+import SearchInput from '@/components/search/SearchInput.vue';
+import SearchHistory from '@/components/search/SearchHistory.vue';
 </script>
 
 <template lang="pug">

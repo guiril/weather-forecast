@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-import LoadingIcon from '../LoadingIcon.vue';
+import LoadingIcon from '@/components/LoadingIcon.vue';
 
 const HISTORY_LIST_KEY = 'searchHistoryList';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;

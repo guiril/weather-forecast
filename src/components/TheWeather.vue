@@ -6,14 +6,14 @@ import {
   getDateFromFullTime,
   getHoursFromFullTime,
   get24Hours
-} from '../utils';
+} from '@/utils';
 
-import SearchInput from './search/SearchInput.vue';
-import LoadingIcon from './LoadingIcon.vue';
-import ErrorMessage from './ErrorMessage.vue';
-import CurrentWeather from './weather/CurrentWeather.vue';
-import HourlyWeather from './weather/HourlyWeather.vue';
-import DailyWeather from './weather/DailyWeather.vue';
+import SearchInput from '@/components/search/SearchInput.vue';
+import LoadingIcon from '@/components/LoadingIcon.vue';
+import ErrorMessage from '@/components/ErrorMessage.vue';
+import CurrentWeather from '@/components/weather/CurrentWeather.vue';
+import HourlyWeather from '@/components/weather/HourlyWeather.vue';
+import DailyWeather from '@/components/weather/DailyWeather.vue';
 
 const HISTORY_LIST_KEY = 'searchHistoryList';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
