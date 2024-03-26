@@ -3,9 +3,9 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { getDateFromFullTime, getHoursFromFullTime } from '@/utils';
 
 const props = defineProps<{
-  hourlyWeather?: any[];
-  currentDate?: number;
-  currentHours?: number;
+  hourlyWeather: any[];
+  currentDate: number | null;
+  currentHours: number | null;
 }>();
 
 const scrollY = ref<number>(0);

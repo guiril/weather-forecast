@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useForecastsStore } from '@/stores/weather';
 
 const DEFAULT_DAYS = 3;
 
-const props = defineProps<{
-  dailyWeather?: any[];
-}>();
-
+const forecastStore = useForecastsStore();
 const currentDays = ref<number>(DEFAULT_DAYS);
 
 const formatDayAsAbbrev = (day: number) => {
@@ -31,9 +29,9 @@ const formatDayAsAbbrev = (day: number) => {
 };
 
 const currentDaysWeather = computed(() => {
-  if (!props.dailyWeather) return [];
+  if (!forecastStore.dailyForecasts) return [];
 
-  return props.dailyWeather.filter(
+  return forecastStore.dailyForecasts.filter(
     (_weather, index) => index < currentDays.value
   );
 });
