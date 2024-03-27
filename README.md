@@ -12,22 +12,23 @@ Uses Vue 3 and Tailwind CSS to implement a weather forecast site.
 
 ## Screenshots
 
-![Homepage](https://i.imgur.com/mCxl8QR.png)
+![Homepage](https://i.imgur.com/53Y4Jva.png)
 
 ![Weather Page](https://i.imgur.com/mc1VfQ9.png)
 
+![Search History](https://i.imgur.com/mCxl8QR.png)
 
-## 操作方法
+## Instructions
 
-1. 前往 [Live Demo](https://weather-forecast-opal.vercel.app) 連結，在搜尋框輸入城市名稱，並按下 Enter。
-2. 抵達天氣預報頁面可看到：
-   - 目前天氣狀況。
-   - 24 小時天氣預報。
-      - 包含日落和日出時間。
-   - 3 天的天氣預報。
-      - 可透過右側選單選擇顯示天數。
-      - 溫度條左側為 N 天最低溫；右側為 N 天最高溫。
-3. 點擊左上角箭頭即可返回首頁。
-   - 可在搜尋框下方看到搜尋過的城市目前的天氣狀況。
-      - 目前只會顯示 10 筆。
-      - 可透過清除按鈕清除搜尋紀錄。
+1. Go to [Live Demo](https://weather-forecast-opal.vercel.app), enter the city name in the search box, and press Enter.
+2. Upon reaching the weather forecast page, you can see:
+   - current weather conditions
+   - 24-hour weather forecast
+      - including sunset and sunrise times
+   - 3-day weather forecast
+      - You can select the number of days to display using the menu on the right.
+      - The temperature bar shows the lowest temperature on the left side and the highest temperature on the right side for the selected number of days.
+3. Click the arrow in the top left corner to return to the homepage.
+   - You can see the current weather conditions of searched cities below the search box.
+     - Only the last 10 searches will be displayed.
+     - You can clear the search history using the clear button.
