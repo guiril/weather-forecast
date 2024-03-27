@@ -86,7 +86,7 @@ export const useForecastsStore = defineStore('forecasts', {
         this.current.maxTemp = response.forecast.forecastday[0].day.maxtemp_c;
         this.dailyForecasts = [...response.forecast.forecastday];
 
-        this.getHourlyWeather(response.forecast.forecastday);
+        this.getHourlyWeather();
         this.addToHistoryList();
 
         this.errorMessage = null;
@@ -95,18 +95,19 @@ export const useForecastsStore = defineStore('forecasts', {
         console.error(err);
       }
     },
-    getHourlyWeather(forecasts: any[]) {
-      this.hourlyForecasts = [];
-      this.getTodayWeather(forecasts[0]);
-      this.getTomorrowWeather(forecasts[1]);
+    getHourlyWeather() {
+      this.hourlyForecasts = []; // remove previous value
+      this.getTodayWeather();
+      this.getTomorrowWeather();
     },
-    getTodayWeather(forecaset: any) {
-      const sunriseTime = forecaset.astro.sunrise;
+    getTodayWeather() {
+      const forecast = this.dailyForecasts[0];
+      const sunriseTime = forecast.astro.sunrise;
       const sunriseHours = get24Hours(sunriseTime);
-      const sunsetTime = forecaset.astro.sunset;
+      const sunsetTime = forecast.astro.sunset;
       const sunsetHours = get24Hours(sunsetTime);
 
-      forecaset.hour.forEach((weather: any, index: number) => {
+      forecast.hour.forEach((weather: any, index: number) => {
         const weatherHours = getHoursFromFullTime(weather.time);
 
         if (!this.currentHours) return;
@@ -133,13 +134,14 @@ export const useForecastsStore = defineStore('forecasts', {
         }
       });
     },
-    getTomorrowWeather(weather: any) {
-      const sunriseTime = weather.astro.sunrise;
+    getTomorrowWeather() {
+      const forecast = this.dailyForecasts[1];
+      const sunriseTime = forecast.astro.sunrise;
       const sunriseHours = get24Hours(sunriseTime);
-      const sunsetTime = weather.astro.sunset;
+      const sunsetTime = forecast.astro.sunset;
       const sunsetHours = get24Hours(sunsetTime);
 
-      weather.hour.forEach((weather: any, index: number) => {
+      forecast.hour.forEach((weather: any, index: number) => {
         const weatherHours = getHoursFromFullTime(weather.time);
 
         if (!this.currentHours) return;
