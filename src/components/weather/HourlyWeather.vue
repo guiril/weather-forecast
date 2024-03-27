@@ -2,11 +2,12 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { getDateFromFullTime, getHoursFromFullTime } from '@/utils';
 
-const props = defineProps<{
-  hourlyWeather: any[];
-  currentDate: number | null;
-  currentHours: number | null;
-}>();
+import { storeToRefs } from 'pinia';
+import { useForecastsStore } from '@/stores/weather';
+
+const forecastStore = useForecastsStore();
+const { hourlyForecasts, currentDate, currentHours } =
+  storeToRefs(forecastStore);
 
 const scrollY = ref<number>(0);
 const dailyWeatherList = ref<HTMLUListElement | null>(null);
@@ -15,8 +16,8 @@ const formatHours = (time: string) => {
   const weatherDate = getDateFromFullTime(time);
   const weatherHours = getHoursFromFullTime(time);
 
-  return weatherDate === props.currentDate &&
-    weatherHours === props.currentHours
+  return weatherDate === currentDate.value &&
+    weatherHours === currentHours.value
     ? 'Now'
     : weatherHours;
 };
@@ -65,7 +66,7 @@ onUnmounted(() => {
 .mb-10.overflow-hidden
   h3.font-bold(class="mb-[38px] text-[20px] text-black") HOURLY FORECAST
   ul.flex.justify-start.cursor-pointer.overflow-x-auto(class="" ref="dailyWeatherList" @mousedown="handleMousedown" @mousemove="handleMousemove" @mouseup="handleMouseup" @mouseleave="handleMouseleave")
-    li.flex.flex-col.items-center.shrink-0(class="p-[18px]" v-for="hour in hourlyWeather" :key="hour.time_epoch")
+    li.flex.flex-col.items-center.shrink-0(class="p-[18px]" v-for="hour in hourlyForecasts" :key="hour.time_epoch")
       template(v-if="hour.condition")
         span.text-xs.font-bold(class="text-neutral-50") {{ formatHours(hour.time) }}
         img.w-16.my-2(:src="hour.condition.icon")

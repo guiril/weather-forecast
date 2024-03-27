@@ -19,8 +19,8 @@ interface StateType {
   currentDate: number | null;
   currentHours: number | null;
   current: CurrentType;
-  hourlyForecasts: any[];
   dailyForecasts: any[];
+  hourlyForecasts: any[];
 }
 
 interface CurrentType {
@@ -44,8 +44,8 @@ export const useForecastsStore = defineStore('forecasts', {
       minTemp: null,
       maxTemp: null
     },
-    hourlyForecasts: [],
-    dailyForecasts: []
+    dailyForecasts: [],
+    hourlyForecasts: []
   }),
   actions: {
     async getLocalTime(location: string | string[]) {

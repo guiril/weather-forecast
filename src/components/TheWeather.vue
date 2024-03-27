@@ -13,16 +13,9 @@ import HourlyWeather from '@/components/weather/HourlyWeather.vue';
 import DailyWeather from '@/components/weather/DailyWeather.vue';
 
 const route = useRoute();
-const forecastStore = useForecastsStore();
 
-const {
-  isLoading,
-  errorMessage,
-  dailyForecasts,
-  hourlyForecasts,
-  currentDate,
-  currentHours
-} = storeToRefs(forecastStore);
+const forecastStore = useForecastsStore();
+const { isLoading, errorMessage } = storeToRefs(forecastStore);
 
 const paramsLocation = ref<string | string[]>(route.params.location || '');
 
@@ -55,6 +48,6 @@ main(v-else class="")
     .flex.justify-between(class="mb-[66px] md:flex-col")
       CurrentWeather
       .flex.flex-col.overflow-hidden
-        HourlyWeather(:hourlyWeather="hourlyForecasts" :currentDate="currentDate" :currentHours="currentHours")
-        DailyWeather(:dailyWeather="dailyForecasts")
+        HourlyWeather
+        DailyWeather
 </template>
