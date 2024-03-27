@@ -4,7 +4,8 @@ Uses Vue 3 and Tailwind CSS to implement a weather forecast site.
 
 ## Technologies Practiced
 
-- Uses Vite to build a Vue 3 project and utilizes the Composition API for development..
+- Uses Vite to build a Vue 3 project and utilizes the Composition API for development.
+- Utilizes Pinia for state management.
 - Uses TypeScript for type checking.
 - Uses the Pug template language.
 - Utilizes Tailwind CSS for UI development and responsive design.
