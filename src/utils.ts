@@ -1,9 +1,12 @@
-const padZero = (number: number) => (number < 10 ? `0${number}` : number);
+export const padZero = (number: number) =>
+  number < 10 ? `0${number}` : number;
 
 export const formatHoursMinutes = (time: string) => {
   // time: HH:MM AM, HH:MM PM
-  const hours = get24Hours(time);
-  const minutes = Number(time.split(' ')[0].split(':')[1]);
+  const [timePart, _period] = time.split(' ');
+  let [hours, minutes] = timePart.split(':').map(Number);
+
+  hours = get24Hours(time);
 
   return `${padZero(hours)}:${padZero(minutes)}`;
 };
@@ -18,8 +21,14 @@ export const getHoursFromFullTime = (
 
 export const get24Hours = (time: string) => {
   // time: HH:MM AM, HH:MM PM
-  const amPm = time.split(' ')[1];
-  const hours = Number(time.split(' ')[0].split(':')[0]);
+  const [timePart, period] = time.split(' ');
+  const hours = timePart.split(':').map(Number)[0];
 
-  return amPm === 'PM' ? hours + 12 : hours;
+  return hours === 12
+    ? period === 'AM'
+      ? 0
+      : 12
+    : period === 'PM'
+    ? hours + 12
+    : hours;
 };
