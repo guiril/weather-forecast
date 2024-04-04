@@ -29,7 +29,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "__test__/utils.test.ts"
+    "__test__/*.test.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }],
   "vueCompilerOptions": {

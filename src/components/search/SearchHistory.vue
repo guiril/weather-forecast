@@ -63,7 +63,7 @@ onMounted(() => {
 main
   .flex.items-center(class="mb-[85px] sm:flex-col sm:mb-8")
     h2.mr-8.font-bold(class="text-[30px] sm:mr-0") Search History
-    button.py-3.px-5.text-primary.font-bold.border.border-primary(type="button" class="rounded-[13px] hover:text-white hover:bg-primary sm:hidden" v-if="searchHistoryList.length !== 0" @click="clearSearchHistory") Clear All History
+    button.py-3.px-5.text-primary.font-bold.border.border-primary(type="button" class="rounded-[13px] hover:text-white hover:bg-primary sm:hidden" v-if="searchHistoryList.length !== 0" @click="clearSearchHistory" data-button="clear") Clear All History
   LoadingIcon(v-if="isLoading")
   template(v-else)
     ul.grid.grid-cols-4.gap-x-5.gap-y-4(v-if="searchHistoryList.length > 0" class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1")
