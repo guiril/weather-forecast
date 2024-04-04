@@ -5,7 +5,7 @@ import SearchHistory from '@/components/search/SearchHistory.vue';
 
 const HISTORY_LIST_KEY = 'searchHistoryList';
 
-describe('Test SearchHistory', () => {
+describe('show or hide clear button', () => {
   beforeEach(() => {
     const mockList = [{ location: 'example location' }];
 
@@ -16,7 +16,7 @@ describe('Test SearchHistory', () => {
     };
   });
 
-  test('Show clear button', () => {
+  test('show clear button', () => {
     const wrapper = mount(SearchHistory);
     const button = wrapper.find('[data-button="clear"]');
 
@@ -24,7 +24,7 @@ describe('Test SearchHistory', () => {
     expect(button.text()).toBe('Clear All History');
   });
 
-  test('Hide clear button', () => {
+  test('hide clear button', () => {
     localStorage.removeItem('searchHistoryList');
 
     const wrapper = mount(SearchHistory);
