@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { weatherAPIGet } from '@/utils/axios';
 
 import LoadingIcon from '@/components/LoadingIcon.vue';
 
 const HISTORY_LIST_KEY = 'searchHistoryList';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const router = useRouter();
 
@@ -38,15 +38,13 @@ const getCurrentWeather = async () => {
     const location = searchHistoryList.value[i].location;
 
     try {
-      const response = await (
-        await fetch(`${API_BASE_URL}/current/${location}`)
-      ).json();
+      const data = await weatherAPIGet(`/current/${location}`);
 
-      if (response.message) {
-        throw new Error(response.message);
+      if (data.message) {
+        throw new Error(data.message);
       }
 
-      currentWeather.value.push(response);
+      currentWeather.value.push(data);
     } catch (err) {
       console.error(err);
     }

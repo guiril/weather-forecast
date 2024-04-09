@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { weatherAPIGet } from '@/utils/axios';
 import {
   formatHoursMinutes,
   getDateFromFullTime,
@@ -6,7 +7,6 @@ import {
   get24Hours
 } from '@/utils/formatters';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const HISTORY_LIST_KEY = 'searchHistoryList';
 
 const searchHistoryList: { location: string }[] = JSON.parse(
@@ -50,15 +50,13 @@ export const useForecastsStore = defineStore('forecasts', {
   actions: {
     async getLocalTime(location: string | string[]) {
       try {
-        const response = await (
-          await fetch(`${API_BASE_URL}/current/${location}`)
-        ).json();
+        const data = await weatherAPIGet(`/current/${location}`);
 
-        if (response.message) {
-          throw new Error(response.message);
+        if (data.message) {
+          throw new Error(data.message);
         }
 
-        const localtime = response.location.localtime;
+        const localtime = data.location.localtime;
         this.currentDate = getDateFromFullTime(localtime);
         this.currentHours = getHoursFromFullTime(localtime);
       } catch (err) {
@@ -69,22 +67,20 @@ export const useForecastsStore = defineStore('forecasts', {
       try {
         this.isLoading = true;
 
-        const response = await (
-          await fetch(`${API_BASE_URL}/forecast/${location}`)
-        ).json();
+        const data = await weatherAPIGet(`/forecast/${location}`);
 
-        if (response.message) {
-          this.errorMessage = response.message;
+        if (data.message) {
+          this.errorMessage = data.message;
           this.isLoading = false;
-          throw new Error(response.message);
+          throw new Error(data.message);
         }
 
-        this.current.location = response.location.name;
-        this.current.temp = response.current.temp_c;
-        this.current.condition = response.current.condition.text;
-        this.current.minTemp = response.forecast.forecastday[0].day.mintemp_c;
-        this.current.maxTemp = response.forecast.forecastday[0].day.maxtemp_c;
-        this.dailyForecasts = [...response.forecast.forecastday];
+        this.current.location = data.location.name;
+        this.current.temp = data.current.temp_c;
+        this.current.condition = data.current.condition.text;
+        this.current.minTemp = data.forecast.forecastday[0].day.mintemp_c;
+        this.current.maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
+        this.dailyForecasts = [...data.forecast.forecastday];
 
         this.getHourlyWeather();
         this.addToHistoryList();
