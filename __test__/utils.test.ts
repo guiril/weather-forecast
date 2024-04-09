@@ -5,7 +5,7 @@ import {
   getDateFromFullTime,
   getHoursFromFullTime,
   get24Hours
-} from '@/utils';
+} from '@/utils/formatters';
 
 test('pad zero.', () => {
   expect(padZero(1)).toBe('01');

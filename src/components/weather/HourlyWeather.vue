@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { getDateFromFullTime, getHoursFromFullTime } from '@/utils';
+import { getDateFromFullTime, getHoursFromFullTime } from '@/utils/formatters';
 
 import { storeToRefs } from 'pinia';
 import { useForecastsStore } from '@/stores/weather';

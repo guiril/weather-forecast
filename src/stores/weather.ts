@@ -4,7 +4,7 @@ import {
   getDateFromFullTime,
   getHoursFromFullTime,
   get24Hours
-} from '@/utils';
+} from '@/utils/formatters';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const HISTORY_LIST_KEY = 'searchHistoryList';
