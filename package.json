@@ -23,6 +23,7 @@
     "@vue/language-plugin-pug": "^1.8.19",
     "@vue/test-utils": "^2.4.5",
     "autoprefixer": "^10.4.16",
+    "axios": "^1.6.8",
     "jsdom": "^24.0.0",
     "postcss": "^8.4.31",
     "pug": "^3.0.2",
