@@ -24,14 +24,12 @@ const getLocation = () => {
 };
 
 onMounted(() => {
-  forecastStore.getLocalTime(paramsLocation.value);
-  forecastStore.getAllForecasts(paramsLocation.value);
+  forecastStore.getForecasts(paramsLocation.value);
 });
 
 watch(route, () => {
   getLocation();
-  forecastStore.getLocalTime(paramsLocation.value);
-  forecastStore.getAllForecasts(paramsLocation.value);
+  forecastStore.getForecasts(paramsLocation.value);
 });
 </script>
 

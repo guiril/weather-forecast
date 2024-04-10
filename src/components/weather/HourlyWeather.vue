@@ -6,18 +6,19 @@ import { storeToRefs } from 'pinia';
 import { useForecastsStore } from '@/stores/weather';
 
 const forecastStore = useForecastsStore();
-const { hourlyForecasts, currentDate, currentHours } =
-  storeToRefs(forecastStore);
+const { hourlyForecasts, localDate, localHours } = storeToRefs(forecastStore);
 
 const scrollY = ref<number>(0);
 const dailyWeatherList = ref<HTMLUListElement | null>(null);
+
+const currentDate = localDate.value;
+const currentHours = localHours.value;
 
 const formatHours = (time: string) => {
   const weatherDate = getDateFromFullTime(time);
   const weatherHours = getHoursFromFullTime(time);
 
-  return weatherDate === currentDate.value &&
-    weatherHours === currentHours.value
+  return weatherDate === currentDate && weatherHours === currentHours
     ? 'Now'
     : weatherHours;
 };

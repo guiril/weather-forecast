@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { weatherAPIGet } from '@/utils/axios';
+import { getForecasetAPI } from '@/utils/axios';
 import {
   formatHoursMinutes,
   getDateFromFullTime,
@@ -16,71 +16,43 @@ const searchHistoryList: { location: string }[] = JSON.parse(
 interface StateType {
   isLoading: boolean;
   errorMessage: string | null;
-  currentDate: number | null;
-  currentHours: number | null;
-  current: CurrentType;
+  searchingLocation: string | null;
+  localTime: string | null;
+  localDate: number | null;
+  localHours: number | null;
   dailyForecasts: any[];
   hourlyForecasts: any[];
-}
-
-interface CurrentType {
-  location: string | null;
-  temp: number | null;
-  condition: string | null;
-  minTemp: number | null;
-  maxTemp: number | null;
 }
 
 export const useForecastsStore = defineStore('forecasts', {
   state: (): StateType => ({
     isLoading: false,
     errorMessage: null,
-    currentDate: null,
-    currentHours: null,
-    current: {
-      location: null,
-      temp: null,
-      condition: null,
-      minTemp: null,
-      maxTemp: null
-    },
+    searchingLocation: null,
+    localTime: null,
+    localDate: null,
+    localHours: null,
     dailyForecasts: [],
     hourlyForecasts: []
   }),
   actions: {
-    async getLocalTime(location: string | string[]) {
-      try {
-        const data = await weatherAPIGet(`/current/${location}`);
-
-        if (data.message) {
-          throw new Error(data.message);
-        }
-
-        const localtime = data.location.localtime;
-        this.currentDate = getDateFromFullTime(localtime);
-        this.currentHours = getHoursFromFullTime(localtime);
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    async getAllForecasts(location: string | string[]) {
+    async getForecasts(location: string | string[]) {
       try {
         this.isLoading = true;
 
-        const data = await weatherAPIGet(`/forecast/${location}`);
+        const data = await getForecasetAPI(location);
 
         if (data.message) {
           this.errorMessage = data.message;
           this.isLoading = false;
           throw new Error(data.message);
         }
-
-        this.current.location = data.location.name;
-        this.current.temp = data.current.temp_c;
-        this.current.condition = data.current.condition.text;
-        this.current.minTemp = data.forecast.forecastday[0].day.mintemp_c;
-        this.current.maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
+        this.searchingLocation = data.location.name;
+        this.localTime = data.location.localtime;
         this.dailyForecasts = [...data.forecast.forecastday];
+
+        this.getCurrentDate();
+        this.getCurrentHours();
 
         this.getHourlyWeather();
         this.addToHistoryList();
@@ -91,10 +63,21 @@ export const useForecastsStore = defineStore('forecasts', {
         console.error(err);
       }
     },
+    getCurrentDate() {
+      if (!this.localTime) return;
+      this.localDate = getDateFromFullTime(this.localTime);
+    },
+    getCurrentHours() {
+      if (!this.localTime) return;
+      this.localHours = getHoursFromFullTime(this.localTime);
+    },
     getHourlyWeather() {
-      this.hourlyForecasts = []; // remove previous value
+      this.resetHourlyForecasts();
       this.getTodayWeather();
       this.getTomorrowWeather();
+    },
+    resetHourlyForecasts() {
+      this.hourlyForecasts = [];
     },
     getTodayWeather() {
       const forecast = this.dailyForecasts[0];
@@ -106,23 +89,20 @@ export const useForecastsStore = defineStore('forecasts', {
       forecast.hour.forEach((weather: any, index: number) => {
         const weatherHours = getHoursFromFullTime(weather.time);
 
-        if (!this.currentHours) return;
+        if (!this.localHours) return;
 
-        if (index >= this.currentHours) {
+        if (index >= this.localHours) {
           this.hourlyForecasts.push(weather);
         }
 
-        if (
-          sunriseHours >= this.currentHours &&
-          sunriseHours === weatherHours
-        ) {
+        if (sunriseHours >= this.localHours && sunriseHours === weatherHours) {
           this.hourlyForecasts.push({
             title: 'Sunrise',
             time: formatHoursMinutes(sunriseTime)
           });
         }
 
-        if (sunsetHours >= this.currentHours && sunsetHours === weatherHours) {
+        if (sunsetHours >= this.localHours && sunsetHours === weatherHours) {
           this.hourlyForecasts.push({
             title: 'Sunset',
             time: formatHoursMinutes(sunsetTime)
@@ -140,9 +120,9 @@ export const useForecastsStore = defineStore('forecasts', {
       forecast.hour.forEach((weather: any, index: number) => {
         const weatherHours = getHoursFromFullTime(weather.time);
 
-        if (!this.currentHours) return;
+        if (!this.localHours) return;
 
-        if (index <= this.currentHours) {
+        if (index <= this.localHours) {
           this.hourlyForecasts.push(weather);
 
           if (sunriseHours === weatherHours) {
@@ -165,12 +145,12 @@ export const useForecastsStore = defineStore('forecasts', {
       const isLocationNotFound =
         searchHistoryList.findIndex(
           (item: { location: string }) =>
-            item.location === this.current.location
+            item.location === this.searchingLocation
         ) === -1;
 
-      if (isLocationNotFound && this.current.location) {
+      if (isLocationNotFound && this.searchingLocation) {
         searchHistoryList.push({
-          location: this.current.location
+          location: this.searchingLocation
         });
 
         localStorage.setItem(

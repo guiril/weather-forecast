@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { weatherAPIGet } from '@/utils/axios';
+import { getCurrentWeatherAPI } from '@/utils/axios';
 
 import LoadingIcon from '@/components/LoadingIcon.vue';
 
@@ -38,7 +38,7 @@ const getCurrentWeather = async () => {
     const location = searchHistoryList.value[i].location;
 
     try {
-      const data = await weatherAPIGet(`/current/${location}`);
+      const data = await getCurrentWeatherAPI(location);
 
       if (data.message) {
         throw new Error(data.message);
@@ -58,8 +58,8 @@ onMounted(() => {
 </script>
 
 <template lang="pug">
-main
-  .flex.items-center(class="mb-[85px] sm:flex-col sm:mb-8")
+main.mt-20(v-if="searchHistoryList.length > 0")
+  .flex.items-center.mb-4(class="sm:flex-col sm:mb-8")
     h2.mr-8.font-bold(class="text-[30px] sm:mr-0") Search History
     button.py-3.px-5.text-primary.font-bold.border.border-primary(type="button" class="rounded-[13px] hover:text-white hover:bg-primary sm:hidden" v-if="searchHistoryList.length !== 0" @click="clearSearchHistory" data-button="clear") Clear All History
   LoadingIcon(v-if="isLoading")
@@ -70,7 +70,7 @@ main
           .flex.items-center
             img.w-8.h-8.mr-2(:src="item.current.condition.icon", :alt="item.current.condition.text")
             span.text-xl.font-extrabold(class="text-black/50") {{ item.current.condition.text }}
-          span.text-xl.font-extrabold.text-primary(class="") {{ item.location.localtime.substring(item.location.localtime.length - 5) }}
+          span.text-xl.font-extrabold.text-primary {{ item.location.localtime.split(' ')[1] }}
         span.inline-block.mb-6.text-6xl.font-bold {{ item.current.temp_c }} °C
         h3.text-2xl.font-semibold.tracking-wider {{ item.location.name }}
     button.hidden.py-3.px-5.mx-auto.mt-8.text-primary.font-bold.border.border-primary(type="button" class="rounded-[13px] hover:text-white hover:bg-primary sm:block" v-if="searchHistoryList.length !== 0" @click="clearSearchHistory") Clear All History
