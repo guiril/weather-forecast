@@ -48,7 +48,9 @@ const resetWeather = () => {
   };
 };
 
-const getWeather = async (location: string) => {
+const getWeather = async (location: string | null) => {
+  if (!location) return;
+
   try {
     const currentData = await getCurrentWeatherAPI(location);
     const forecastData = await getForecasetAPI(location);
