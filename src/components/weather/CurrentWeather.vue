@@ -70,7 +70,7 @@ const getWeather = async (location: string) => {
 };
 
 const goWeahterPage = (location: string) => {
-  if (!isHome || !location) return;
+  if (!isHome) return;
   router.push(`weather/${location}`);
 };
 
