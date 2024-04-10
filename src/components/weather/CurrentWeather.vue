@@ -16,9 +16,11 @@ const path = route.path;
 
 let isLoading: boolean;
 
+const isHome = () => path === '/';
+
 interface Weahter {
-  icon: string | null;
-  condition: string | null;
+  icon: string;
+  condition: string;
   time: string | null;
   temp: number | null;
   maxTemp: number | null;
@@ -27,8 +29,8 @@ interface Weahter {
 }
 
 const weather = ref<Weahter>({
-  icon: null,
-  condition: null,
+  icon: '',
+  condition: '',
   time: null,
   temp: null,
   maxTemp: null,
@@ -38,8 +40,8 @@ const weather = ref<Weahter>({
 
 const resetWeather = () => {
   weather.value = {
-    icon: null,
-    condition: null,
+    icon: '',
+    condition: '',
     time: null,
     temp: null,
     maxTemp: null,
@@ -69,12 +71,10 @@ const getWeather = async (location: string) => {
   }
 };
 
-const goWeahterPage = (location: string) => {
-  if (!isHome) return;
+const goWeahterPage = (location: string | null) => {
+  if (!isHome || !location) return;
   router.push(`weather/${location}`);
 };
-
-const isHome = () => path === '/';
 
 onMounted(async () => {
   isLoading = true;
