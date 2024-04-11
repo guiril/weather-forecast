@@ -13,7 +13,7 @@ Uses Vue 3 and Tailwind CSS to implement a weather forecast site.
 
 ## Screenshots
 
-![Homepage](https://i.imgur.com/53Y4Jva.png)
+![Homepage](https://i.imgur.com/iYIQUqk.png)
 
 ![Weather Page](https://i.imgur.com/mc1VfQ9.png)
 
