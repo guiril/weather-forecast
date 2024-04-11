@@ -1,10 +1,10 @@
 # Weather Forecast
 
-Uses Vue 3 and Tailwind CSS to implement a weather forecast site.
+Uses Vue with Composition API and Tailwind CSS to implement a weather forecast site.
 
 ## Technologies Practiced
 
-- Uses Vite to build a Vue 3 project and utilizes the Composition API for development
+- Uses Vite to build a Vue project and utilizes the Composition API for development
 - Uses Pinia for state management
 - Uses Vitest and Vue Utils Test for testing
 - Uses TypeScript for type checking
