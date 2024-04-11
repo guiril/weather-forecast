@@ -44,7 +44,7 @@ main(v-else class="")
   ErrorMessage(v-if="errorMessage" :message="errorMessage")
   template(v-else)
     .flex.justify-between(class="mb-[66px] md:flex-col")
-      CurrentWeather
+      CurrentWeather(:isDefault="false")
       .flex.flex-col.overflow-hidden
         HourlyWeather
         DailyWeather

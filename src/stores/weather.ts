@@ -16,10 +16,17 @@ const searchHistoryList: { location: string }[] = JSON.parse(
 interface StateType {
   isLoading: boolean;
   errorMessage: string | null;
-  searchingLocation: string | null;
-  localTime: string | null;
+  searchingLocation: string;
   localDate: number | null;
   localHours: number | null;
+  currentWeather: {
+    icon: string;
+    condition: string;
+    time: string;
+    temp: number | null;
+    maxTemp: number | null;
+    minTemp: number | null;
+  };
   dailyForecasts: any[];
   hourlyForecasts: any[];
 }
@@ -28,10 +35,17 @@ export const useForecastsStore = defineStore('forecasts', {
   state: (): StateType => ({
     isLoading: false,
     errorMessage: null,
-    searchingLocation: null,
-    localTime: null,
+    searchingLocation: '',
     localDate: null,
     localHours: null,
+    currentWeather: {
+      icon: '',
+      condition: '',
+      time: '',
+      temp: null,
+      maxTemp: null,
+      minTemp: null
+    },
     dailyForecasts: [],
     hourlyForecasts: []
   }),
@@ -47,8 +61,17 @@ export const useForecastsStore = defineStore('forecasts', {
           this.isLoading = false;
           throw new Error(data.message);
         }
+
+        this.currentWeather = {
+          icon: data.current.condition.icon,
+          condition: data.current.condition.text,
+          time: data.location.localtime,
+          temp: data.current.temp_c,
+          maxTemp: data.forecast.forecastday[0].day.maxtemp_c,
+          minTemp: data.forecast.forecastday[0].day.mintemp_c
+        };
+
         this.searchingLocation = data.location.name;
-        this.localTime = data.location.localtime;
         this.dailyForecasts = [...data.forecast.forecastday];
 
         this.getCurrentDate();
@@ -64,12 +87,12 @@ export const useForecastsStore = defineStore('forecasts', {
       }
     },
     getCurrentDate() {
-      if (!this.localTime) return;
-      this.localDate = getDateFromFullTime(this.localTime);
+      if (!this.currentWeather.time) return;
+      this.localDate = getDateFromFullTime(this.currentWeather.time);
     },
     getCurrentHours() {
-      if (!this.localTime) return;
-      this.localHours = getHoursFromFullTime(this.localTime);
+      if (!this.currentWeather.time) return;
+      this.localHours = getHoursFromFullTime(this.currentWeather.time);
     },
     getHourlyWeather() {
       this.resetHourlyForecasts();

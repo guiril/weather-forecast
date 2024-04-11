@@ -2,12 +2,12 @@ import { defineStore } from 'pinia';
 import { getLocalLocationAPI } from '@/utils/axios';
 
 interface StateType {
-  localLocation: string | null;
+  localLocation: string;
 }
 
 export const useLocationStore = defineStore('location', {
   state: (): StateType => ({
-    localLocation: null
+    localLocation: ''
   }),
   actions: {
     async getLocalLocation() {
@@ -20,7 +20,7 @@ export const useLocationStore = defineStore('location', {
     },
     resetLocalLocation() {
       if (!this.localLocation) return;
-      this.localLocation = null;
+      this.localLocation = '';
     }
   }
 });

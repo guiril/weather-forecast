@@ -9,6 +9,6 @@ import SearchHistory from '@/components/search/SearchHistory.vue';
 header.flex.justify-between.items-center(class="h-[180px] mb-[60px] lg:h-auto lg:flex-col lg:pt-[30px]")
   LayoutLogo
   SearchInput
-CurrentWeather
+CurrentWeather(:isDefault="true")
 SearchHistory
 </template>
