@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": "^18.0.0",
-    "npm": "^9.0.0"
+    "node": "^24.0.0",
+    "npm": "^10.0.0"
   },
   "scripts": {
     "dev": "vite",
@@ -18,7 +18,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@types/node": "^20.11.30",
+    "@types/node": "^24.0.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/language-plugin-pug": "^1.8.19",
     "@vue/test-utils": "^2.4.5",
